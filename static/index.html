@@ -60,7 +60,6 @@
         .ornament-draggable {
             cursor: grab;
             user-select: none;
-            -webkit-user-drag: none;
         }
 
         .ornament-draggable:active {
@@ -127,16 +126,22 @@
                 <div class="flex gap-[30px] mb-4">
                     <!-- Left: Title + Auth -->
                     <div class="flex flex-col">
-                        <h1 class="text-2xl leading-tight">The</h1>
-                        <h1 class="text-2xl leading-tight mb-2">Holiday Tree</h1>
+                        <h1 class="text-2xl leading-tight mb-2">{{ isOwnTree ? 'My' : ownerName + "'s" }} Holiday Tree
+                        </h1>
                         <div v-if="user" class="text-[10px]">
                             <span class="text-muted">{{ user.displayName }}</span>
                             <span class="text-muted"> | </span>
                             <button @click="signOut" class="text-signout">Sign Out</button>
                         </div>
-                        <button v-else @click="signIn" class="text-[10px] text-muted text-left">
-                            Sign In
-                        </button>
+                        <div v-else>
+                            <button v-if="!isOwnTree" @click="signIn"
+                                class="bg-white border-2 border-stone-300 rounded-lg px-4 py-1.5 text-xs font-bold hover:bg-stone-50 transition-colors">
+                                Create your own tree
+                            </button>
+                            <button v-else @click="signIn" class="text-[10px] text-muted text-left">
+                                Sign In
+                            </button>
+                        </div>
                     </div>
 
                     <!-- Right: Instructions + Ornaments -->
@@ -181,8 +186,8 @@
             <div v-else class="min-h-screen flex">
                 <!-- Left Panel -->
                 <div class="w-2/5 max-w-[500px] flex flex-col justify-center p-20">
-                    <h1 class="text-5xl lg:text-6xl xl:text-7xl leading-tight">The</h1>
-                    <h1 class="text-5xl lg:text-6xl xl:text-7xl leading-tight mb-8">Holiday Tree</h1>
+                    <h1 class="text-5xl lg:text-6xl xl:text-7xl leading-tight mb-8">{{ isOwnTree ? 'My' : ownerName +
+                        "'s" }} Holiday Tree</h1>
 
                     <!-- Ornament Palette -->
                     <div class="grid grid-cols-4 gap-3 mb-4">
@@ -216,7 +221,7 @@
                     <div v-else>
                         <button @click="signIn"
                             class="bg-white border-2 border-stone-300 rounded-lg px-6 py-2 font-bold hover:bg-stone-50 transition-colors">
-                            Sign in with Google
+                            Create your own tree
                         </button>
                         <p class="text-sm text-muted mt-2">Sign in to create your own tree</p>
                     </div>
