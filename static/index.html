@@ -126,19 +126,20 @@
                 <div class="flex gap-[30px] mb-4">
                     <!-- Left: Title + Auth -->
                     <div class="flex flex-col">
-                        <h1 class="text-2xl leading-tight mb-2">{{ isOwnTree ? 'My' : ownerName + "'s" }} Holiday Tree
-                        </h1>
-                        <div v-if="user" class="text-[10px]">
-                            <span class="text-muted">{{ user.displayName }}</span>
+                        <h1 class="text-3xl leading-tight font-bold">The</h1>
+                        <h1 class="text-3xl leading-tight font-bold">Holiday</h1>
+                        <h1 class="text-3xl leading-tight font-bold mb-6">Tree</h1>
+                        <div v-if="user" class="text-sm">
+                            <span class="italic text-muted">{{ user.displayName }}</span>
                             <span class="text-muted"> | </span>
-                            <button @click="signOut" class="text-signout">Sign Out</button>
+                            <button @click="signOut" class="text-signout font-bold">Sign Out</button>
                         </div>
                         <div v-else>
                             <button v-if="!isOwnTree" @click="signIn"
                                 class="bg-white border-2 border-stone-300 rounded-lg px-4 py-1.5 text-xs font-bold hover:bg-stone-50 transition-colors">
                                 Create your own tree
                             </button>
-                            <button v-else @click="signIn" class="text-[10px] text-muted text-left">
+                            <button v-else @click="signIn" class="text-sm text-muted text-left italic">
                                 Sign In
                             </button>
                         </div>
@@ -146,13 +147,12 @@
 
                     <!-- Right: Instructions + Ornaments -->
                     <div class="flex-1">
-                        <p class="text-[10px] text-muted mb-2">
-                            Drag one ornament onto the tree to leave a message for {{ isOwnTree ? 'your visitors' :
-                            ownerName }}
+                        <p class="text-sm text-muted mb-3">
+                            Drag one ornament onto the tree to begin.
                         </p>
                         <div class="grid grid-cols-4 gap-2">
                             <img v-for="i in 8" :key="i" :src="getOrnamentSrc(i)" :alt="'Ornament ' + i"
-                                class="w-10 h-10 ornament-draggable" draggable="true"
+                                class="w-12 h-12 ornament-draggable" draggable="true"
                                 @dragstart="onDragStart($event, i)">
                         </div>
                     </div>
@@ -160,7 +160,7 @@
 
                 <!-- Share Link (Owner only) -->
                 <div v-if="isOwnTree && currentTreeId" class="mb-4">
-                    <button @click="copyShareLink" class="text-[10px] text-muted underline">
+                    <button @click="copyShareLink" class="text-sm text-muted underline">
                         {{ copied ? '✓ Link copied!' : 'Copy link to share your tree' }}
                     </button>
                 </div>
