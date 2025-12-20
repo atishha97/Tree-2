@@ -126,7 +126,12 @@
                 <div class="flex gap-[30px] mb-4">
                     <!-- Left: Title + Auth -->
                     <div class="flex flex-col">
-                        <h1 class="text-3xl leading-tight font-bold">The</h1>
+                        <div v-if="isOwnTree">
+                            <h1 class="text-3xl leading-tight font-bold">My</h1>
+                        </div>
+                        <div v-else>
+                            <h1 class="text-3xl leading-tight font-bold">{{ ownerName }}'s</h1>
+                        </div>
                         <h1 class="text-3xl leading-tight font-bold">Holiday</h1>
                         <h1 class="text-3xl leading-tight font-bold mb-6">Tree</h1>
                         <div v-if="user" class="text-sm">
