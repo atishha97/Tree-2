@@ -62,5 +62,4 @@ The application currently uses a specific Firebase configuration located in `sta
 *   `assets/`: Directory for images and other static media.
 *   `Procfile`: Deployment configuration (e.g., for Heroku/Render).
 *   `requirements.txt`: Python dependencies.
-## License
-[MIT](LICENSE)
+
