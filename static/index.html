@@ -94,6 +94,22 @@
             -ms-overflow-style: none;
             scrollbar-width: none;
         }
+
+        /* Slide Up Transition */
+        .slide-up-enter-active,
+        .slide-up-leave-active {
+            transition: all 0.5s ease;
+        }
+
+        .slide-up-enter-from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .slide-up-leave-to {
+            opacity: 0;
+            transform: translateY(-20px);
+        }
     </style>
 </head>
 
@@ -105,17 +121,42 @@
         </div>
 
         <!-- Landing Page (Anonymous users at root) -->
-        <div v-else-if="showLanding" class="min-h-screen flex flex-col items-center justify-center p-8">
-            <h1 class="text-4xl md:text-6xl text-center mb-4">The</h1>
-            <h1 class="text-4xl md:text-6xl text-center mb-8">Holiday Tree</h1>
-            <p class="text-muted text-center mb-8 max-w-md">
-                Create your personalized virtual Christmas tree and let friends and family hang ornaments with heartfelt
-                messages.
-            </p>
-            <button @click="signIn"
-                class="bg-white border-2 border-stone-300 rounded-lg px-8 py-3 font-bold hover:bg-stone-50 transition-colors">
-                Sign in to Create Your Tree
-            </button>
+        <div v-else-if="showLanding" class="min-h-screen flex flex-col md:flex-row bg-tree-bg">
+            <!-- Left Panel (Text) -->
+            <div class="w-full md:w-2/5 md:max-w-[500px] flex flex-col justify-center p-8 md:p-20">
+                <div class="flex flex-col w-fit mx-auto md:mx-0">
+                    <div class="h-[1.3125em] overflow-hidden text-4xl lg:text-5xl xl:text-[64px]">
+                        <transition name="slide-up" mode="out-in">
+                            <h1 :key="currentLandingName"
+                                class="text-4xl lg:text-5xl xl:text-[64px] leading-[1.3125] text-center md:text-left text-black font-normal block">
+                                {{ currentLandingName }}'s
+                            </h1>
+                        </transition>
+                    </div>
+                    <h1
+                        class="text-4xl lg:text-5xl xl:text-[64px] leading-[1.3125] text-center md:text-left mb-8 -mt-2 md:-mt-4 text-black font-normal">
+                        Holiday Tree</h1>
+                </div>
+                <p class="text-muted text-center md:text-left mb-8 max-w-md mx-auto md:mx-0 text-sm md:text-base">
+                    Create your personalized virtual Christmas tree and let friends and family hang ornaments with
+                    heartfelt
+                    messages.
+                </p>
+                <div class="flex justify-center md:justify-start">
+                    <button @click="signIn"
+                        class="bg-white border-2 border-stone-300 rounded-lg px-8 py-3 font-bold hover:bg-stone-50 transition-colors">
+                        Sign in to Create Your Tree
+                    </button>
+                </div>
+            </div>
+
+            <!-- Right Panel (Tree Image) -->
+            <div class="flex-1 flex items-end justify-center p-8 pb-0">
+                <div class="relative max-w-3xl w-full h-full flex items-end justify-center">
+                    <img src="/assets/ChristmasTree2.png" alt="Christmas Tree"
+                        class="max-w-full max-h-[40vh] md:max-h-[90vh] object-contain filter drop-shadow-xl">
+                </div>
+            </div>
         </div>
 
         <!-- Main App (Tree View) -->
@@ -340,7 +381,7 @@
         </div>
     </div>
 
-    <script src="/static/app.js"></script>
+    <script src="/static/app.js?v=2"></script>
 </body>
 
 </html>

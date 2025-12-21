@@ -60,6 +60,13 @@ createApp({
             // Delete confirmation
             showDeleteConfirm: false,
 
+            // Rotating names
+            currentLandingName: 'The',
+            // So if I use "The", I shouldn't have "'s".
+            landingNames: ['Jeremie', 'Arul', 'John', 'Sarah', 'Mike', 'Emily', 'David', 'Jessica'],
+            landingNameIndex: 0,
+            landingNameInterval: null,
+
             // Firestore listener
             ornamentsUnsubscribe: null
         };
@@ -72,6 +79,13 @@ createApp({
     },
 
     async mounted() {
+        // Start name rotation
+        this.currentLandingName = this.landingNames[0];
+        this.landingNameInterval = setInterval(() => {
+            this.landingNameIndex = (this.landingNameIndex + 1) % this.landingNames.length;
+            this.currentLandingName = this.landingNames[this.landingNameIndex];
+        }, 3000);
+
         // Handle window resize
         window.addEventListener('resize', this.handleResize);
 
@@ -84,6 +98,9 @@ createApp({
     },
 
     beforeUnmount() {
+        if (this.landingNameInterval) {
+            clearInterval(this.landingNameInterval);
+        }
         window.removeEventListener('resize', this.handleResize);
         if (this.ornamentsUnsubscribe) {
             this.ornamentsUnsubscribe();
