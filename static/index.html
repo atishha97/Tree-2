@@ -126,7 +126,7 @@
                 <!-- 1. Header Section -->
                 <div class="flex flex-col items-center justify-center w-full mb-6">
                     <!-- Dynamic Title -->
-                    <h1 class="text-3xl font-bold text-center leading-tight text-slate-900 mb-4 font-capriola">
+                    <h1 class="text-3xl font-normal text-center leading-tight text-black mb-4 font-capriola">
                         {{ isOwnTree ? 'My' : ownerName + "'s" }} Holiday Tree
                     </h1>
 
@@ -189,7 +189,8 @@
             <div v-else class="min-h-screen flex">
                 <!-- Left Panel -->
                 <div class="w-2/5 max-w-[500px] flex flex-col justify-center p-20">
-                    <h1 class="text-5xl lg:text-6xl xl:text-7xl leading-tight mb-8">{{ isOwnTree ? 'My' : ownerName +
+                    <h1 class="text-5xl lg:text-6xl xl:text-7xl leading-tight mb-8 text-black font-normal">{{ isOwnTree
+                        ? 'My' : ownerName +
                         "'s" }} Holiday Tree</h1>
 
                     <!-- Ornament Palette -->
