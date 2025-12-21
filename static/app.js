@@ -435,13 +435,13 @@ createApp({
 
         // Utility functions
         generateRandomOrnaments() {
-            const count = Math.floor(Math.random() * 6) + 5; // 5 to 10 ornaments
+            const count = Math.floor(Math.random() * 5) + 4; // 4 to 8 ornaments
             const newOrnaments = [];
             for (let i = 0; i < count; i++) {
                 // Triangle distribution to match tree shape
 
-                // Random Y between 20% (top) and 85% (bottom)
-                const y = Math.floor(Math.random() * 65) + 20;
+                // Random Y between 50% (middle) and 85% (bottom)
+                const y = Math.floor(Math.random() * 35) + 50;
 
                 // Calculate allowable X width based on Y (wider at bottom)
                 // Linear interpolation:
