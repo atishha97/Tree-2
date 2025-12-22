@@ -282,6 +282,10 @@ createApp({
         },
 
         // Authentication
+        goToLanding() {
+            window.location.href = '/';
+        },
+
         async signIn() {
             try {
                 const provider = new firebase.auth.GoogleAuthProvider();

@@ -161,7 +161,7 @@
                 <div class="flex justify-center md:justify-start">
                     <button @click="signIn"
                         class="bg-white text-black border border-black rounded-full px-8 py-4 text-lg font-normal hover:bg-neutral-50 transition-colors">
-                        Sign in to create your tree
+                        Sign up to create your tree
                     </button>
                 </div>
             </div>
@@ -184,10 +184,10 @@
         <!-- Main App (Tree View) -->
         <div v-else class="min-h-screen">
             <!-- MOBILE LAYOUT -->
-            <div v-if="isMobile" class="min-h-screen flex flex-col bg-tree-bg" style="padding: 20px 5% 0 5%;">
+            <div v-if="isMobile" class="min-h-screen flex flex-col bg-tree-bg pt-5">
 
                 <!-- Split Header & Ornament Section -->
-                <div class="flex flex-row justify-between items-start mb-2 pt-8">
+                <div class="flex flex-row justify-between items-start mb-2 pt-8 px-[5%]">
                     <!-- Left Side: Title & Auth -->
                     <div class="flex flex-col w-[45%] pr-1">
                         <h1 class="font-serif italic text-4xl leading-[1.1] text-black mb-6">
@@ -203,9 +203,9 @@
                             <button @click="signOut" class="text-[#FF3232] hover:opacity-80">Sign Out</button>
                         </div>
                         <div v-else class="mt-auto">
-                            <button @click="signIn"
+                            <button @click="goToLanding"
                                 class="bg-white text-black border border-black rounded-full px-6 py-2 text-sm font-normal hover:bg-neutral-50 transition-colors">
-                                Sign in
+                                Create your tree
                             </button>
                         </div>
                     </div>
@@ -226,9 +226,9 @@
                 <!-- 3. Tree Section -->
                 <div class="flex-1 flex items-end justify-center tree-container pb-0" ref="dropZone" @dragover.prevent
                     @drop="onDrop">
-                    <div class="relative w-full h-full flex items-end justify-center">
+                    <div class="relative w-full flex items-end justify-center">
                         <img src="/assets/ChristmasTreeNew.png" alt="Christmas Tree"
-                            class="max-w-full max-h-[85vh] object-contain filter drop-shadow-xl" ref="treeImage">
+                            class="w-full h-auto object-contain filter drop-shadow-xl" ref="treeImage">
                         <!-- Ornaments on tree -->
                         <div v-for="ornament in ornaments" :key="ornament.id" class="ornament-on-tree"
                             :style="{ left: ornament.x + '%', top: ornament.y + '%' }"
@@ -280,9 +280,9 @@
                         </p>
                     </div>
                     <div v-else>
-                        <button @click="signIn"
+                        <button @click="goToLanding"
                             class="w-full bg-white text-black border border-black rounded-full px-7 py-4 text-lg font-normal hover:bg-neutral-50 transition-colors">
-                            Sign in
+                            Create your tree
                         </button>
                     </div>
                 </div>
