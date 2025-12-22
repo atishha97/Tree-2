@@ -13,20 +13,12 @@
     <meta property="og:description" content="Decorate a virtual tree together with friends and family">
     <meta property="og:type" content="website">
 
-    <!-- Google Fonts - Capriola -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Capriola&display=swap" rel="stylesheet">
-
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script>
         tailwind.config = {
             theme: {
                 extend: {
-                    fontFamily: {
-                        'capriola': ['Capriola', 'cursive'],
-                    },
                     colors: {
                         'tree-bg': '#FAFFF7',
                         'muted': '#ADA8A8',
@@ -46,11 +38,8 @@
     <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
 
     <style>
-        * {
-            font-family: 'Capriola', cursive;
-        }
-
         body {
+            font-family: Avenir, sans-serif;
             background-color: #FAFFF7;
             margin: 0;
             padding: 0;
@@ -177,7 +166,7 @@
                 <!-- 1. Header Section -->
                 <div class="flex flex-col items-center justify-center w-full mb-6">
                     <!-- Dynamic Title -->
-                    <h1 class="text-2xl font-normal text-center leading-[1.3125] text-black mb-4 font-capriola">
+                    <h1 class="text-2xl font-serif italic text-center leading-[1.3125] text-black mb-4">
                         {{ isOwnTree ? 'My' : ownerName + "'s" }} Holiday Tree
                     </h1>
 
@@ -189,8 +178,8 @@
                     </div>
                     <div v-else class="mb-2">
                         <button v-if="!isOwnTree" @click="signIn"
-                            class="bg-stone-800 text-white rounded-full px-6 py-2.5 text-sm font-bold shadow-lg transform transition active:scale-95 hover:bg-stone-700 hover:shadow-xl">
-                            Create your own tree
+                            class="bg-white text-stone-800 border-2 border-stone-300 rounded-full px-7 py-2.5 text-lg font-normal shadow-lg transform transition active:scale-95 hover:bg-stone-50 hover:shadow-xl">
+                            Set up your tree
                         </button>
                         <button v-else @click="signIn"
                             class="text-sm text-muted italic hover:text-stone-800 transition-colors">
@@ -241,37 +230,33 @@
                 <!-- Left Panel -->
                 <div class="w-2/5 max-w-[500px] flex flex-col justify-center p-20">
                     <div class="flex flex-col w-fit">
-                        <h1 class="text-4xl lg:text-5xl xl:text-[64px] leading-[1.3125] mb-8 text-black font-normal">{{
+                        <h1
+                            class="text-4xl lg:text-5xl xl:text-[64px] leading-[1.3125] mb-[10px] text-black font-serif italic">
+                            {{
                             isOwnTree
                             ? 'My' : ownerName +
                             "'s" }} Holiday Tree</h1>
 
+                        <p class="text-lg text-black mb-[30px]">
+                            Place an ornament on the tree to leave a message for {{ isOwnTree ? 'your visitors' :
+                            ownerName }}
+                        </p>
+
                         <!-- Ornament Palette -->
-                        <div class="grid grid-cols-4 gap-3 mb-4 w-full justify-items-center">
+                        <div class="grid grid-cols-4 gap-3 mb-[30px] w-full justify-items-center">
                             <img v-for="i in 8" :key="i" :src="getOrnamentSrc(i)" :alt="'Ornament ' + i"
                                 class="w-14 h-14 ornament-draggable object-contain" draggable="true"
                                 @dragstart="onDragStart($event, i)">
                         </div>
                     </div>
 
-                    <p class="text-sm text-muted mb-8">
-                        Drag one ornament onto the tree to leave a message for {{ isOwnTree ? 'your visitors' :
-                        ownerName }}
-                    </p>
 
-                    <!-- Share Link (Owner only) -->
-                    <div v-if="isOwnTree && currentTreeId" class="mb-6">
-                        <button @click="copyShareLink"
-                            class="text-sm text-muted underline hover:text-black transition-colors">
-                            {{ copied ? '✓ Link copied!' : 'Copy link to share your tree' }}
-                        </button>
-                    </div>
 
 
 
                     <!-- Auth Section -->
                     <div v-if="user">
-                        <p class="text-sm text-muted">
+                        <p class="text-[18px] text-muted">
                             Signed in as {{ user.displayName }}
                             <span class="mx-2">|</span>
                             <button @click="signOut" class="text-signout hover:underline">Sign Out</button>
@@ -279,8 +264,8 @@
                     </div>
                     <div v-else>
                         <button @click="signIn"
-                            class="w-full bg-white border-2 border-stone-300 rounded-lg px-6 py-4 font-bold hover:bg-stone-50 transition-colors">
-                            Create your own tree
+                            class="w-full bg-stone-800 text-white rounded-full px-7 py-4 text-lg font-normal hover:bg-stone-700 transition-colors">
+                            Set up your tree
                         </button>
                     </div>
                 </div>
@@ -303,6 +288,22 @@
             </div>
         </div>
 
+        <!-- Floating Share Button (Owner Only) -->
+        <button v-if="isOwnTree && currentTreeId" @click="copyShareLink"
+            class="fixed bottom-8 right-8 bg-white text-stone-800 px-6 py-4 rounded-full shadow-lg hover:shadow-xl hover:scale-105 transition-all z-40 flex items-center justify-center gap-3 border border-stone-100 font-medium text-[16px]"
+            :title="copied ? 'Link copied!' : 'Share tree'">
+            <svg v-if="!copied" xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24"
+                stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                    d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" />
+            </svg>
+            <svg v-else xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 text-green-500" fill="none"
+                viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span>{{ copied ? 'Link Copied!' : 'Share tree with friends and family' }}</span>
+        </button>
+
         <!-- Add Ornament Modal -->
         <div v-if="showAddModal" class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 p-4"
             @click.self="closeAddModal">
@@ -310,10 +311,10 @@
 
                 <!-- Close Button -->
                 <button @click="closeAddModal"
-                    class="absolute top-4 right-4 text-stone-400 hover:text-stone-600 transition-colors p-2 rounded-full hover:bg-stone-100">
+                    class="absolute top-4 right-4 text-stone-300 hover:text-stone-500 transition-colors p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24"
                         stroke="currentColor">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
                             d="M6 18L18 6M6 6l12 12" />
                     </svg>
                 </button>
@@ -323,26 +324,28 @@
                     <img :src="getOrnamentSrc(newOrnament.type)" class="w-12 h-12 object-contain filter drop-shadow-md">
                 </div>
 
-                <h2 class="text-[22px] font-semibold text-stone-900 mb-1 leading-[1.35]">Leave a message</h2>
-                <p class="text-slate-500 font-normal text-[15px] mb-6 leading-[1.45]">A wish, a memory, or a quiet note
+                <h2 class="text-[28px] font-medium font-['Georgia'] italic text-stone-900 mb-1 leading-[1.35]">Leave a
+                    message
+                </h2>
+                <p class="text-black font-normal text-[18px] mb-6 leading-[1.45]">A wish, a memory, or a quiet note
                 </p>
 
                 <div class="w-full mb-4">
                     <textarea v-model="newOrnament.message" placeholder="Write your wish here"
-                        class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 h-32 resize-none focus:outline-none focus:ring-2 focus:ring-stone-200 placeholder-slate-400 text-stone-700 text-[16px] font-normal leading-[1.5]"
+                        class="w-full bg-slate-50 border border-slate-200 rounded-xl p-4 h-32 resize-none focus:outline-none focus:border-stone-400 placeholder-slate-400 text-stone-700 text-[18px] font-normal leading-[1.5]"
                         maxlength="500"></textarea>
                 </div>
 
                 <div class="w-full mb-8">
                     <input v-model="newOrnament.senderName" type="text" placeholder="Signed by"
-                        class="w-full border-b border-stone-200 py-2 focus:outline-none focus:border-stone-400 placeholder-slate-400 text-stone-700 text-[14px] font-medium leading-[1.4]"
+                        class="w-full border-b border-stone-200 py-2 focus:outline-none focus:border-stone-400 placeholder-slate-400 text-stone-700 text-[18px] font-medium leading-[1.4]"
                         maxlength="50">
                 </div>
 
                 <div class="w-full flex flex-col gap-3">
                     <button @click="hangOrnament"
                         :disabled="!newOrnament.senderName.trim() || !newOrnament.message.trim()"
-                        class="w-full bg-[#8B8B8B] text-white rounded-xl py-3 font-semibold hover:bg-[#757575] transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-sm text-[16px] leading-[1.25]">
+                        class="w-full bg-stone-800 text-white rounded-full py-4 font-normal hover:bg-stone-700 transition-colors disabled:opacity-50 disabled:cursor-not-allowed shadow-lg text-[18px] leading-[1.25]">
                         Place on the tree
                     </button>
                 </div>
@@ -352,26 +355,50 @@
         <!-- View Ornament Modal -->
         <div v-if="showViewModal && selectedOrnament"
             class="fixed inset-0 modal-backdrop flex items-center justify-center z-50 p-4" @click.self="closeViewModal">
-            <div class="bg-white rounded-2xl p-6 w-full max-w-md shadow-xl">
-                <div class="flex items-start gap-4 mb-4">
-                    <img :src="getOrnamentSrc(selectedOrnament.ornament_type)" class="w-16 h-16 object-contain">
-                    <div>
-                        <h2 class="text-xl">From {{ selectedOrnament.sender_name }}</h2>
-                        <p class="text-sm text-muted">{{ formatDate(selectedOrnament.created_at) }}</p>
-                    </div>
+
+            <div
+                class="bg-white rounded-[24px] px-12 py-12 w-full max-w-[400px] shadow-2xl flex flex-col items-center relative">
+
+                <!-- Close Button (Top Right) -->
+                <button @click="closeViewModal"
+                    class="absolute top-5 right-5 text-stone-300 hover:text-stone-500 transition-colors p-2">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                </button>
+
+                <!-- Delete Button (Top Left - Owner Only - Subtle) -->
+                <button v-if="canDeleteOrnament(selectedOrnament)" @click="confirmDeleteOrnament"
+                    class="absolute top-5 left-5 text-stone-200 hover:text-red-400 transition-colors p-2"
+                    title="Remove Ornament">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"
+                            d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                    </svg>
+                </button>
+
+                <!-- Ornament Image -->
+                <div class="mb-8">
+                    <img :src="getOrnamentSrc(selectedOrnament.ornament_type)"
+                        class="w-20 h-20 object-contain filter drop-shadow-md">
                 </div>
 
-                <p class="text-lg mb-6 whitespace-pre-wrap">{{ selectedOrnament.message }}</p>
+                <!-- Message -->
+                <h2
+                    class="font-serif italic text-3xl text-stone-900 leading-snug mb-8 text-center break-words break-all w-full max-h-[150px] overflow-y-auto scrollbar-hide">
+                    "{{ selectedOrnament.message }}"
+                </h2>
 
-                <div class="flex gap-3">
-                    <button @click="closeViewModal"
-                        class="flex-1 border-2 border-stone-200 rounded-lg py-2 hover:bg-stone-50 transition-colors">
-                        Close
-                    </button>
-                    <button v-if="canDeleteOrnament(selectedOrnament)" @click="confirmDeleteOrnament"
-                        class="flex-1 bg-red-500 text-white rounded-lg py-2 hover:bg-red-600 transition-colors">
-                        Remove Ornament
-                    </button>
+                <!-- Divider -->
+                <div class="w-full h-px bg-stone-100 mb-6"></div>
+
+                <!-- Sender Info -->
+                <div class="flex flex-col items-center">
+                    <span class="text-[18px] text-stone-400 mb-2">Sent by</span>
+                    <span class="text-[#FF3232] text-[18px] font-bold">{{ selectedOrnament.sender_name }}</span>
                 </div>
             </div>
         </div>
