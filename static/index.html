@@ -184,7 +184,7 @@
         <!-- Main App (Tree View) -->
         <div v-else class="min-h-screen">
             <!-- MOBILE LAYOUT -->
-            <div v-if="isMobile" class="min-h-screen flex flex-col bg-tree-bg" style="padding: 20px 10% 0 10%;">
+            <div v-if="isMobile" class="min-h-screen flex flex-col bg-tree-bg" style="padding: 20px 5% 0 5%;">
 
                 <!-- Split Header & Ornament Section -->
                 <div class="flex flex-row justify-between items-start mb-2 pt-8">
@@ -228,7 +228,7 @@
                     @drop="onDrop">
                     <div class="relative w-full h-full flex items-end justify-center">
                         <img src="/assets/ChristmasTreeNew.png" alt="Christmas Tree"
-                            class="max-w-full max-h-[60vh] object-contain filter drop-shadow-xl" ref="treeImage">
+                            class="max-w-full max-h-[75vh] object-contain filter drop-shadow-xl" ref="treeImage">
                         <!-- Ornaments on tree -->
                         <div v-for="ornament in ornaments" :key="ornament.id" class="ornament-on-tree"
                             :style="{ left: ornament.x + '%', top: ornament.y + '%' }" @click="openViewModal(ornament)"
