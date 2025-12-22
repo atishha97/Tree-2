@@ -169,7 +169,7 @@
             <!-- Right Panel (Tree Image) -->
             <div class="flex-1 flex items-end justify-center p-8 pb-0">
                 <div class="relative max-w-3xl w-fit h-full flex items-end justify-center mx-auto">
-                    <img src="/assets/ChristmasTree2.png" alt="Christmas Tree"
+                    <img src="/assets/ChristmasTreeNew.png" alt="Christmas Tree"
                         class="max-w-full max-h-[40vh] md:max-h-[90vh] object-contain filter drop-shadow-xl">
                     <!-- Random Ornaments -->
                     <div v-for="ornament in landingOrnaments" :key="ornament.id" class="ornament-on-tree"
@@ -184,7 +184,7 @@
         <!-- Main App (Tree View) -->
         <div v-else class="min-h-screen">
             <!-- MOBILE LAYOUT -->
-            <div v-if="isMobile" class="min-h-screen flex flex-col bg-tree-bg" style="padding: 20px 20px 0 20px;">
+            <div v-if="isMobile" class="min-h-screen flex flex-col bg-tree-bg" style="padding: 20px 10% 0 10%;">
 
                 <!-- Split Header & Ornament Section -->
                 <div class="flex flex-row justify-between items-start mb-2 pt-8">
@@ -212,7 +212,7 @@
 
                     <!-- Right Side: Instructions & Grid -->
                     <div class="flex flex-col w-[50%] pl-1">
-                        <p class="text-[13px] text-black mb-4 leading-tight font-sans">
+                        <p class="text-[13px] text-black mb-4 leading-tight">
                             Drag one ornament onto the tree to begin.
                         </p>
                         <!-- Ornament Grid (4x2) -->
@@ -227,7 +227,7 @@
                 <div class="flex-1 flex items-end justify-center tree-container pb-0" ref="dropZone" @dragover.prevent
                     @drop="onDrop">
                     <div class="relative w-full h-full flex items-end justify-center">
-                        <img src="/assets/Mobile_ChristmasTree.png" alt="Christmas Tree"
+                        <img src="/assets/ChristmasTreeNew.png" alt="Christmas Tree"
                             class="max-w-full max-h-[60vh] object-contain filter drop-shadow-xl" ref="treeImage">
                         <!-- Ornaments on tree -->
                         <div v-for="ornament in ornaments" :key="ornament.id" class="ornament-on-tree"
@@ -290,7 +290,7 @@
                 <div class="flex-1 flex items-end justify-center px-8 pt-8 pb-0 tree-container" ref="dropZone"
                     @dragover.prevent @drop="onDrop">
                     <div class="relative max-w-3xl w-full h-full flex items-end justify-center">
-                        <img src="/assets/ChristmasTree2.png" alt="Christmas Tree"
+                        <img src="/assets/ChristmasTreeNew.png" alt="Christmas Tree"
                             class="max-w-full max-h-[90vh] object-contain" ref="treeImage">
                         <!-- Ornaments on tree -->
                         <div v-for="ornament in ornaments" :key="ornament.id" class="ornament-on-tree"
